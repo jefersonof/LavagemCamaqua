@@ -14,6 +14,10 @@
                   <icon>fa:list-ol</icon>
                   <action>ClienteList</action>
               </menuitem>
+              <menuitem label='Listar1'>
+                  <icon>fa:list-ol</icon>
+                  <action>ClienteList1</action>
+              </menuitem>
         </menu>
     </menuitem>
 
