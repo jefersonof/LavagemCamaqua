@@ -25,6 +25,7 @@ class Cliente extends TRecord
         parent::addAttribute('placa');
         parent::addAttribute('endereco');
         parent::addAttribute('numero');
+        parent::addAttribute('telefone');
         parent::addAttribute('complemento');
         parent::addAttribute('created_at');
         parent::addAttribute('update_at');

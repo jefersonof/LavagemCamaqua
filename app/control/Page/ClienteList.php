@@ -12,6 +12,9 @@
 class ClienteList extends TPage
 {
     private $datagrid;
+
+    // trait with onReload, onSearch, onDelete...
+    use Adianti\Base\AdiantiStandardListTrait;
     
     public function __construct()
     {
@@ -24,8 +27,8 @@ class ClienteList extends TPage
         // add the columns
         $this->datagrid->addColumn( new TDataGridColumn('id',    'Id',    'center', '10%') );
         $this->datagrid->addColumn( new TDataGridColumn('nome',    'Name',    'left',   '30%') );
-        $this->datagrid->addColumn( new TDataGridColumn('placa',    'City',    'left',   '30%') );
-        $this->datagrid->addColumn( new TDataGridColumn('telefone',   'State',   'left',   '30%') );
+        $this->datagrid->addColumn( new TDataGridColumn('placa',    'Placa',    'left',   '30%') );
+        $this->datagrid->addColumn( new TDataGridColumn('telefone',   'Telefone',   'left',   '30%') );
         
         $action1 = new TDataGridAction([$this, 'onView'], ['placa'=>'{placa}',  'nome' => '{nome}'] );
         $this->datagrid->addAction($action1, 'View', 'fa:search blue');
@@ -40,10 +43,17 @@ class ClienteList extends TPage
         
         // enable fuse search by column name
         $this->datagrid->enableSearch($input_search, 'placa, nome');
+
+        //pageNavigation
+		$this->pageNavigation = new TPageNavigation();
+		$this->pageNavigation->enableCounters();
+		$this->pageNavigation->setAction(new TAction(array($this, 'onReload')));
+		$this->pageNavigation->setWidth($this->datagrid->getWidth());
         
         $panel = new TPanelGroup( _t('Datagrid search') );
         $panel->addHeaderWidget($input_search);
         $panel->add($this->datagrid)->style = 'overflow-x:auto';
+        $panel->add($this->pageNavigation);
         $panel->addFooter('footer');
         
         // wrap the page content using vertical box
@@ -57,7 +67,7 @@ class ClienteList extends TPage
     /**
      * Load the data into the datagrid
      */
-    function onReload()
+    function onReload($param)
     {
         $this->datagrid->clear();
         
@@ -67,9 +77,12 @@ class ClienteList extends TPage
 			
 			$repository = new TRepository('cliente');
 			$criteria   = new TCriteria;
+
+            $criteria->setProperty('order','id');//NOME
+			$criteria->setProperty('direction','ASC');
+			$criteria->setProperty('limit',2);
 			
-            $criteria->setProperty('order', 'id');//ordena a grid em DESC 
-            $criteria->setProperty('direction','DESC');
+            $criteria->setProperties($param);
 			
 		    $objects2 = $repository->load( $criteria );//objects2
 			
@@ -82,6 +95,13 @@ class ClienteList extends TPage
 				   $this->datagrid->addItem( $object2 );//ADD NA GRID
 				  
 				}
+
+                $criteria->resetProperties();
+                $count = $repository->count( $criteria ); 
+
+                $this->pageNavigation->setCount ($count);
+                $this->pageNavigation->setProperties ($param );
+                $this->pageNavigation->setlimit(2);
 		    }
 			else
 			{
@@ -113,12 +133,13 @@ class ClienteList extends TPage
         new TMessage('info', "The code is: <b>$code</b> <br> The name is : <b>$name</b>");
     }
     
-    /**
-     * shows the page
-     */
-    function show()
+    public function show()
     {
-        $this->onReload();
+        // check if the datagrid is already loaded
+        if (!$this->loaded AND (!isset($_GET['method']) OR $_GET['method'] !== 'onReload') )
+        {
+            $this->onReload( func_get_arg(0) );
+        }
         parent::show();
     }
 }
