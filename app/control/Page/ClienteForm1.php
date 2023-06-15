@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
  */
-class ClienteForm extends TPage
+class ClienteForm1 extends TPage
 {
     private $form;
     
@@ -33,6 +33,7 @@ class ClienteForm extends TPage
         $placa        = new TEntry('placa');
         $endereco     = new TEntry('endereco');
         $numero       = new TEntry('numero');
+        $complemento  = new TEntry('complemento');
         $telefone     = new TEntry('telefone');
       
         $telefone->setMask('9999-99999');
@@ -50,9 +51,16 @@ class ClienteForm extends TPage
         $row = $this->form->addFields( [ new TLabel('Endereço'),     $endereco ],
                                        [ new TLabel('Número'),     $numero ] );
         $row->layout = ['col-sm-9', 'col-sm-3' ];
+
+        $row = $this->form->addFields( [ new TLabel('Complemento'),     $complemento ]);
+        $row->layout = ['col-sm-12'];
         
         //Btn salvar
-        $this->form->addAction('Send', new TAction(array($this, 'onSave')), 'far:check-circle green');
+        $btn_onsave = $this->form->addAction("Salvar", new TAction([$this, 'onSave']), 'fas:save #ffffff');
+        $this->btn_onsave = $btn_onsave;
+        $btn_onsave->addStyleClass('btn-primary');
+        $btn_onclear = $this->form->addAction("Limpar formulário", new TAction([$this, 'onClear']), 'fas:eraser #dd5a43');
+        $this->btn_onclear = $btn_onclear;
         
         // wrap the page content using vertical box
         $vbox = new TVBox;
@@ -76,7 +84,12 @@ class ClienteForm extends TPage
                 
                 $this->form->setData($cliente);
                 
-                new TMessage('info', 'Salvo com sucesso');
+                //</messageAutoCode> //</blockLine>
+//<generatedAutoCode>
+            TToast::show('success', "Registro salvo", 'topRight', 'far:check-circle');
+            //TApplication::loadPage('ClienteHeaderList', 'onShow', $loadPageParam);
+//</generatedAutoCode>
+                
                 
                 //Desabilita o 'CODIGO'
                 //TEntry::disableField('formBancos', 'CODIGO');
@@ -93,6 +106,48 @@ class ClienteForm extends TPage
             $this->form->setData( $this->form->getData() ); // keep form data
             TTransaction::rollback(); // undo all pending operations
         }
+    }
+
+    //<generated-onEdit>
+    public function onEdit( $param )//</ini>
+    {
+        try
+        {
+            if (isset($param['key']))
+            {
+                $key = $param['key'];  // get the parameter $key
+                TTransaction::open(self::$database); // open a transaction
+
+                $object = new Cliente($key); // instantiates the Active Record //</blockLine>
+
+                //</beforeSetDataAutoCode> //</blockLine>
+
+                $this->form->setData($object); // fill the form //</blockLine>
+
+                //</afterSetDataAutoCode> //</blockLine>
+                TTransaction::close(); // close the transaction 
+            }
+            else
+            {
+                $this->form->clear();
+            }
+        }
+        catch (Exception $e) // in case of exception
+        {
+            new TMessage('error', $e->getMessage()); // shows the exception error message
+            TTransaction::rollback(); // undo all pending operations
+        }
+    }//</end>
+//</generated-onEdit>
+
+ /**
+     * Clear form data
+     * @param $param Request
+     */
+    public function onClear( $param )
+    {
+        $this->form->clear(true);
+
     }
     
     /**

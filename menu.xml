@@ -6,6 +6,14 @@
                   <icon>fa:user-plus</icon>
                   <action>ClienteForm</action>
               </menuitem>
+              <menuitem label='Cadastrar'>
+                  <icon>fa:user-plus</icon>
+                  <action>ClienteForm1</action>
+              </menuitem>
+              <menuitem label='Listar'>
+                  <icon>fa:list-ol</icon>
+                  <action>ClienteList</action>
+              </menuitem>
         </menu>
     </menuitem>
 

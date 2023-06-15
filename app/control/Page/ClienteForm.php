@@ -45,7 +45,7 @@ class ClienteForm extends TPage
         $placa = new TEntry('placa');
         $endereco = new TEntry('endereco');
         $numero = new TEntry('numero');
-        $complento = new TEntry('complemento');
+        $complento = new TEntry('complento');
         $created_at = new TDateTime('created_at');
         $update_at = new TDateTime('update_at');
         $deleted_at = new TDateTime('deleted_at');
@@ -92,10 +92,11 @@ class ClienteForm extends TPage
         $row3 = $this->form->addFields([new TLabel("Endereco:", null, '14px', null, '100%'),$endereco],[new TLabel("Numero:", null, '14px', null, '100%'),$numero]);
         $row3->layout = ['col-sm-6','col-sm-6'];
 
-        $row4 = $this->form->addFields([new TLabel("Complento:", null, '14px', null, '100%'),$complento]);
-        $row4->layout = ['col-sm-12'];
+        $row4 = $this->form->addFields([new TLabel("Complento:", null, '14px', null, '100%'),$complento],[new TLabel("Criado em:", null, '14px', null, '100%'),$created_at]);
+        $row4->layout = ['col-sm-6','col-sm-6'];
 
-        
+        $row5 = $this->form->addFields([new TLabel("Atualizado em:", null, '14px', null, '100%'),$update_at],[new TLabel("Deletado em:", null, '14px', null, '100%'),$deleted_at]);
+        $row5->layout = ['col-sm-6','col-sm-6'];
 
         //<onAfterFieldsCreation>
 
@@ -164,7 +165,7 @@ class ClienteForm extends TPage
                 $loadPageParam['target_container'] = $param['target_container'];
             }
 
-        //</generatedAutoCode>
+//</generatedAutoCode>
 
             // get the generated {PRIMARY_KEY}
             $data->id = $object->id; //</blockLine>
@@ -173,12 +174,10 @@ class ClienteForm extends TPage
             TTransaction::close(); // close the transaction
 
             //</messageAutoCode> //</blockLine>
-            //<generatedAutoCode>
-            
+//<generatedAutoCode>
             TToast::show('success', "Registro salvo", 'topRight', 'far:check-circle');
             //TApplication::loadPage('ClienteHeaderList', 'onShow', $loadPageParam);
-
-            //</generatedAutoCode>
+//</generatedAutoCode>
 
             //</endTryAutoCode> //</blockLine>
 //<generatedAutoCode>
@@ -236,10 +235,6 @@ class ClienteForm extends TPage
     public function onClear( $param )
     {
         $this->form->clear(true);
-
-        //<onFormClear>
-
-        //</onFormClear>
 
     }
 
