@@ -233,13 +233,6 @@ class LoginForm extends TPage
                     TSession::setValue('frontpage', 'EmptyPage');
                 }
             }
-			
-			//Teste de permissão
-				
-				
-				
-				
-			//Fecha teste de permissão
         }
         catch (Exception $e)
         {
