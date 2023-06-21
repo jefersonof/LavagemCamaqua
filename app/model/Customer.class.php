@@ -26,10 +26,11 @@ class Customer extends TRecord
     {
         parent::__construct($id);
       
-        parent::addAttribute('veiculo');
-        parent::addAttribute('placa');
+        parent::addAttribute('car');
+        parent::addAttribute('plate');
         parent::addAttribute('name');
         parent::addAttribute('address');
+        parent::addAttribute('complement');
         parent::addAttribute('phone');
         parent::addAttribute('birthdate');
         parent::addAttribute('status');
