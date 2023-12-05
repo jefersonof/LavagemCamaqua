@@ -101,7 +101,7 @@ class OrdemDeServicoForm extends TPage
         // create the page container
         $container = new TVBox;
         $container->style = 'width: 100%';
-        $container->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
+        $container->add(new TXMLBreadCrumb('menu.xml', 'OrdemDeServicoForm1'));
         $container->add($this->form);
         parent::add($container);
     }

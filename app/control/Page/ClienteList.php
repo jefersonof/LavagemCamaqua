@@ -37,9 +37,9 @@ class ClienteList extends TPage
 		$row->layout = ['col-sm-8', 'col-sm-4'];							   
 		
 		//add as ações do form
-		$this->form->addAction('Pesquisar' ,new TAction(array($this, 'onSearch')), 'fa:search');
+		$this->form->addAction('Pesquisar' ,new TAction(array($this, 'onSearch')), 'fa:search #009688');
 		$this->form->addAction('limpar' ,new TAction(array($this, 'onClear')), 'fa:eraser red');
-		$this->form->addAction('Cadastrar Cliente' ,new TAction(array('ClienteForm', 'onEdit')), 'fa:eraser red');
+		$this->form->addAction('Cadastrar Cliente' ,new TAction(array('ClienteForm', 'onEdit')), 'fa:user-plus blue');
 		
 		//cria a grid
 		$this->datagrid = new BootstrapDatagridWrapper(new TQuickGrid);
@@ -106,7 +106,7 @@ class ClienteList extends TPage
 			TTransaction::open('lavagem');//samples
 			
 			//var_dump(TSession::getValue('TS_cliente2'));
-			$rp_cliente = new TRepository('Customer1');
+			$rp_cliente = new TRepository('Customer');
 			
 			$criteria = new TCriteria;
 			
@@ -199,7 +199,7 @@ class ClienteList extends TPage
 		TTransaction::open('lavagem');//samples
 		
 		$key = $param['key'];
-		$cliente = new Customer1($key);
+		$cliente = new Customer($key);
 		
 		$nome = $cliente->name;
 		
@@ -221,7 +221,7 @@ class ClienteList extends TPage
 		{
 			TTransaction::open('lavagem');//samples
 			
-			$rp_cliente = new TRepository('Customer1');
+			$rp_cliente = new TRepository('Customer');
 			
 			$criteria = new TCriteria;
 			$criteria->add(new TFilter('id', '=', $param['id'] ));

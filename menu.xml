@@ -1,6 +1,6 @@
 <menu>
 	<menuitem label='Cliente'>
-        <icon>fa:users</icon> <!--user-plus -->
+        <icon>fa:users #009688</icon> <!--user-plus -->
         <menu>
               <menuitem label='Cadastrar'>
                   <icon>fa:user-plus</icon>
@@ -16,28 +16,7 @@
               </menuitem>
         </menu>
     </menuitem>
-    <menuitem label='Serviços'>
-        <icon>fa:car #009688</icon> <!--user-plus -->
-        <menu>
-              <menuitem label='Cadastro de Serviço'><!--add serviço-->
-                  <icon>fas:plus fa-fw</icon>
-                  <action>ClienteForm</action>
-              </menuitem>
-              <menuitem label='Ordem de Serviço'><!--Novo serviço-->
-                  <icon>fas:shower</icon>
-                  <action>OrdemDeServicoForm</action>
-              </menuitem>
-              <menuitem label='Ordem de Serviço 1'><!--Novo serviço-->
-                  <icon>fas:shower</icon>
-                  <action>OrdemDeServicoForm1</action>
-              </menuitem>
-              <menuitem label='Ordem de Serviço'><!--Lista de serviço-->
-                  <icon>fas:shower</icon>
-                  <action>SystemAdministrationDashboard</action>
-              </menuitem> 
-        </menu>
-    </menuitem>
-	
+    
     <menuitem label='_t{Administration}'>
         <icon>fas:home fa-fw</icon>
         <menu>

@@ -54,6 +54,7 @@ class OrdemDeServicoForm1 extends TPage
         
         // adjust field properties
         $id->setEditable(false);
+        $product_detail_price->setEditable(false);
         $customer_id->setEditable(false);
         $phone->setEditable(false);
         $veiculo->setEditable(false);
@@ -103,7 +104,7 @@ class OrdemDeServicoForm1 extends TPage
         $this->form->addFields( [], [$add_product] );
         
         $this->product_list = new BootstrapDatagridWrapper(new TDataGrid);
-        $this->product_list->setHeight(70);
+        $this->product_list->setHeight(90);
         $this->product_list->makeScrollable();
         $this->product_list->setId('products_list');
         $this->product_list->generateHiddenFields();
@@ -190,6 +191,9 @@ class OrdemDeServicoForm1 extends TPage
         $id_last = TSession::getValue('TS_idLast');
 
         $key = $param['key'];
+
+        var_dump($id_last);
+        exit;
         
         $cliente = new Customer1($param['key']);
 

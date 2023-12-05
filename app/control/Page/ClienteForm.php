@@ -66,6 +66,11 @@ class ClienteForm extends TPage
         $phone->setSize('100%');
         $phone->setMask('99999-9999');
 
+        //VALIDAÇÃO
+        $nome->addValidation('Nome', new TRequiredValidator); 
+        $placa->addValidation(' "Placa do veículo " ', new TRequiredValidator); 
+        $phone->addValidation('Telefone', new TRequiredValidator); 
+        
         //<onBeforeAddFieldsToForm>
 
         //</onBeforeAddFieldsToForm>
@@ -124,7 +129,7 @@ class ClienteForm extends TPage
 
             $this->form->validate(); // validate form data
 
-            $object = new Customer1(); // create an empty object //</blockLine>
+            $object = new Customer(); // create an empty object //</blockLine>
             
             $data = $this->form->getData(); // get form data as array
             $object->fromArray( (array) $data); // load the object with data
@@ -136,9 +141,10 @@ class ClienteForm extends TPage
 
             
             $object->store(); // save the object //</blockLine>
+            TSession::setValue('TS_idLast', $object->getLastID() );
 
-            //TApplication::loadPage('OrdemDeServicoForm1', 'onOrdem');
-            TApplication::loadPage('ClienteList', 'onClear');
+            TApplication::loadPage('OrdemDeServicoForm1', 'onOrdem');
+            //TApplication::loadPage('ClienteList', 'onClear');
             
 
             //</afterStoreAutoCode> //</blockLine>
@@ -176,6 +182,7 @@ class ClienteForm extends TPage
             //</catchAutoCode> //</blockLine>
 
             new TMessage('error', $e->getMessage()); // shows the exception error message
+            //TToast::show('error', $e->getMessage(), 'topCenter', 'far:check-circle');//topRight
             $this->form->setData( $this->form->getData() ); // keep form data
             TTransaction::rollback(); // undo all pending operations
         }
@@ -204,8 +211,8 @@ class ClienteForm extends TPage
             else
             {
                 $this->form->clear();
-
-                $data->
+                $data = $this->form->getData();
+                //$data->
                 $this->form->setData($data);
             }
         }
